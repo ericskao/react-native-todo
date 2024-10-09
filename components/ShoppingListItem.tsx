@@ -1,5 +1,6 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
+import * as Haptics from "expo-haptics";
 import {
   Alert,
   Pressable,
@@ -21,6 +22,7 @@ export function ShoppingListItem({
   onToggleComplete: () => void;
 }) {
   const handleDelete = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     Alert.alert(
       `Are you sure you want to delete ${item}?`,
       "It will be gone for good",

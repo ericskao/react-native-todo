@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import {
   FlatList,
   LayoutAnimation,
@@ -57,6 +58,7 @@ export default function App() {
   const handleDelete = (id: string) => {
     const newShoppingList = list.filter((item) => item.id !== id);
     setList(newShoppingList);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     saveToStorage(STORAGE_KEY, newShoppingList);
   };
@@ -64,6 +66,11 @@ export default function App() {
   const handleToggle = (id: string) => {
     const newList = list.map((item) => {
       if (item.id === id) {
+        if (item.completed) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        } else {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
         return { ...item, completed: !item.completed };
       }
       return item;
